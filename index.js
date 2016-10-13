@@ -10,7 +10,7 @@ var http = require("https");
 var fn;
 
 program
-    .version('0.0.1')
+    .version('0.1.0')
     .arguments('<coverage-file>')
     .option('--access-token <token>')
     .option('--api-url <url>', 'The base URL of the API.', 'https://scrutinizer-ci.com/api')
