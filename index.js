@@ -5,7 +5,7 @@ var fs = require('fs');
 var RepositoryInspector = require('./src/repository-inspector');
 var path = require("path");
 var url = require("url");
-var http = require("http");
+var http = require("https");
 
 var fn;
 
