@@ -26,7 +26,6 @@
   "bugs": {
     "url": "https://github.com/alekitto/ocular.js/issues"
   },
-  "homepage": "https://github.com/alekitto/ocular.js#readme",
   "dependencies": {
     "commander": "^2.9.0"
   },
