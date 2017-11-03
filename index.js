@@ -61,7 +61,7 @@ var data = {
     }
 };
 
-var urlObj = url.parse(baseUrl+'/repositories/'+repositoryName+'/data/code-coverage'+(program.accessToken || ''));
+var urlObj = url.parse(baseUrl+'/repositories/'+repositoryName+'/data/code-coverage');
 var req = http.request({
     protocol: urlObj.protocol,
     host: urlObj.host,
@@ -72,6 +72,12 @@ var req = http.request({
     headers: {
         'Content-Type': 'application/json'
     }
+}, function (res) {
+  if (200 === res.statusCode) {
+    console.log('Upload went fine.')
+  } else {
+    console.log('Upload failed.')
+  }
 });
 
 req.write(JSON.stringify(data));
