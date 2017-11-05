@@ -61,18 +61,11 @@ var data = {
     }
 };
 
-var urlObj = url.parse(baseUrl+'/repositories/'+repositoryName+'/data/code-coverage');
-var req = http.request({
-    protocol: urlObj.protocol,
-    host: urlObj.host,
-    hostname: urlObj.hostname,
-    port: urlObj.port,
-    method: 'POST',
-    path: urlObj.path+(program.accessToken ? '?access_token='+program.accessToken : ''),
-    headers: {
-        'Content-Type': 'application/json'
-    }
-}, function (res) {
+var options = url.parse(baseUrl+'/repositories/'+repositoryName+'/data/code-coverage'+(program.accessToken ? '?access_token='+program.accessToken : ''));
+options.headers = {
+    'Content-Type': 'application/json'
+};
+var req = http.request(options, function (res) {
   if (200 === res.statusCode) {
     console.log('Upload went fine.')
   } else {
