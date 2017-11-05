@@ -7,32 +7,32 @@ var RepositoryInspector = require('../src/repository-inspector');
 tmp.setGracefulCleanup();
 
 describe('RepositoryInspector', function () {
+    this.timeout(Infinity);
+    beforeEach(function () {
+        this._tmpDir = tmp.dirSync({ unsafeCleanup: true });
+    });
+
+    afterEach(function () {
+        this._tmpDir.removeCallback();
+    });
+
     it('getQualifiedName works', function () {
-        var tmpDir = tmp.dirSync({ unsafeCleanup: true });
-        execSync('git clone https://github.com/schmittjoh/metadata.git '+tmpDir.name);
+        execSync('git clone https://github.com/schmittjoh/metadata.git ' + this._tmpDir.name);
 
-        var inspector = new RepositoryInspector(tmpDir.name);
-        var ret = expect(inspector.getQualifiedName()).to.be.equal('g/schmittjoh/metadata');
-
-        tmpDir.removeCallback();
-        return ret;
+        var inspector = new RepositoryInspector(this._tmpDir.name);
+        expect(inspector.getQualifiedName()).to.be.equal('g/schmittjoh/metadata');
     });
 
     it('getCurrentParents works', function () {
-        var tmpDir = tmp.dirSync({ unsafeCleanup: true });
+        execSync('git init', { cwd: this._tmpDir.name });
+        fse.outputFileSync(this._tmpDir.name+'/foo', 'foo');
+        execSync('git add . && git commit -m "adds foo"', { cwd: this._tmpDir.name });
 
-        execSync('git init', { cwd: tmpDir.name });
-        fse.outputFileSync(tmpDir.name+'/foo', 'foo');
-        execSync('git add . && git commit -m "adds foo"', { cwd: tmpDir.name });
-
-        var inspector = new RepositoryInspector(tmpDir.name);
+        var inspector = new RepositoryInspector(this._tmpDir.name);
         var headRev = inspector.getCurrentRevision();
 
-        fse.outputFileSync(tmpDir.name+'/bar', 'bar');
-        execSync('git add . && git commit -m "adds bar"', { cwd: tmpDir.name });
-        var ret = expect(inspector.getCurrentParents()).to.deep.equal([headRev]);
-
-        tmpDir.removeCallback();
-        return ret;
-    })
+        fse.outputFileSync(this._tmpDir.name+'/bar', 'bar');
+        execSync('git add . && git commit -m "adds bar"', { cwd: this._tmpDir.name });
+        expect(inspector.getCurrentParents()).to.deep.equal([headRev]);
+    });
 });

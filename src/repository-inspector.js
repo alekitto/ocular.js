@@ -7,10 +7,6 @@ var Inspector = function (repositoryDir) {
     this._dir = repositoryDir;
 };
 
-var isString = function(x) {
-    return Object.prototype.toString.call(x) === "[object String]"
-};
-
 Inspector.prototype._execGit = function (command) {
     var output = execSync('git '+command, {
         cwd: this._dir
