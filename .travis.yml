@@ -1,0 +1,17 @@
+language: node_js
+
+node_js:
+    - 0.11
+    - 0.12
+    - 4
+    - 6
+    - 7
+    - 8
+
+sudo: false
+
+script:
+    - if [ "$TRAVIS_NODE_VERSION" == "6" ]; then npm run-script coverage; else npm test; fi
+
+after_success:
+    - if [ "$TRAVIS_NODE_VERSION" == "6" ]; then node ./index.js coverage/clover.xml; fi

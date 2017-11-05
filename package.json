@@ -7,7 +7,8 @@
     "ocular": "./index.js"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "coverage": "nyc npm test"
   },
   "engines": {
     "node": ">=0.11.12"
@@ -33,6 +34,23 @@
     "chai": "^3.5.0",
     "fs-extra": "^0.30.0",
     "mocha": "^3.1.2",
+    "nyc": "^11.3.0",
     "tmp": "0.0.29"
+  },
+  "nyc": {
+    "per-file": true,
+    "include": [
+      "src/**/*.js",
+      "index.js"
+    ],
+    "exclude": [
+      "test/**"
+    ],
+    "reporter": [
+      "text-summary",
+      "clover"
+    ],
+    "all": true,
+    "report-dir": "./coverage"
   }
 }
