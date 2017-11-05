@@ -62,6 +62,7 @@ var data = {
 };
 
 var options = url.parse(baseUrl+'/repositories/'+repositoryName+'/data/code-coverage'+(program.accessToken ? '?access_token='+program.accessToken : ''));
+options.method = 'POST';
 options.headers = {
     'Content-Type': 'application/json'
 };
